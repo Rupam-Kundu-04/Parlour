@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#FFF1F2">
   <title>Aurelia Luxe Bridal Salon &amp; Academy | Webjackers Showcase Demo</title>
   
-  <!-- Fonts -->
+  <!-- Google Fonts: Cormorant Garamond & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -18,7 +18,7 @@
 
   <style>
     :root {
-      /* Bright, Luminous Luxury Palette (Nayantara Signature Tokens) */
+      /* Bright, Luminous Luxury Palette */
       --bg-light: #FFFBFB;
       --bg-surface: #FFFFFF;
       --bg-glass: rgba(255, 255, 255, 0.92);
@@ -115,43 +115,18 @@
       padding-right: max(clamp(14px, 4vw, 28px), env(safe-area-inset-right, 0px));
     }
 
-    /* ==========================================================
-       TOP NOTICE STRIP (iOS Dynamic Island & Android Notch Aware)
-       ========================================================== */
-    .top-strip {
-      background: var(--rose-quartz);
-      color: var(--text-muted);
-      font-size: clamp(0.72rem, 1.8vw, 0.8rem);
-      padding-top: calc(8px + env(safe-area-inset-top, 0px));
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--border-subtle);
+    /* Clean Lining Tabular Numerals (Equal Height & Alignment) */
+    .num-clean,
+    .hero-stat-item strong,
+    .price-block strong,
+    .hours-table td:last-child {
+      font-family: 'Plus Jakarta Sans', sans-serif !important;
+      font-variant-numeric: tabular-nums lining-nums !important;
+      font-feature-settings: "tnum" 1, "lnum" 1;
+      line-height: 1.2 !important;
     }
 
-    .top-strip-inner {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 6px 16px;
-    }
-
-    .top-strip-left {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    .top-strip-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 600;
-    }
-
-    /* ==========================================================
-       FLOATING GLASSMORPHIC PILL NAVIGATION ISLAND
-       ========================================================== */
+    /* Floating Glassmorphic Pill Navigation Island */
     .site-header {
       position: sticky;
       top: max(10px, env(safe-area-inset-top, 10px));
@@ -272,7 +247,7 @@
       display: flex;
       gap: 8px;
       align-items: center;
-      shrink: 0;
+      flex-shrink: 0;
     }
 
     /* Mobile Menu Toggle Button */
@@ -399,30 +374,6 @@
 
     .btn:active {
       transform: scale(0.97);
-    }
-
-    .drawer-nav a:hover, .drawer-nav a:focus-visible {
-      background: #FFF1F2;
-      color: var(--brand-coral);
-    }
-
-    /* Buttons with 44px+ tap targets */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 11px 22px;
-      min-height: 44px;
-      border-radius: 999px;
-      font-size: 0.86rem;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      border: 1px solid transparent;
-      user-select: none;
-      touch-action: manipulation;
     }
 
     .btn-gold {
@@ -583,15 +534,20 @@
 
     .hero-stat-item {
       min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .hero-stat-item strong {
-      font-size: clamp(1.35rem, 3vw, 1.65rem);
+      font-size: clamp(1.25rem, 2.6vw, 1.55rem);
       font-weight: 800;
       color: var(--brand-burgundy);
-      font-family: 'Cormorant Garamond', serif;
-      display: block;
-      line-height: 1.1;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      height: 1.3em;
+      letter-spacing: -0.01em;
     }
 
     .hero-stat-item span {
@@ -600,6 +556,7 @@
       display: block;
       text-transform: uppercase;
       letter-spacing: 0.06em;
+      margin-top: 4px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -744,9 +701,7 @@
       line-height: 1.6;
     }
 
-    /* ==========================================================
-       LAKMÉ STANDARD ARTISTRY CATEGORY TABS & PHOTO SERVICE CARDS
-       ========================================================== */
+    /* Lakmé Standard Artistry Category Tabs & Photo Service Cards */
     .category-filter-row {
       display: flex;
       justify-content: center;
@@ -794,7 +749,7 @@
       gap: clamp(16px, 2.5vw, 24px);
     }
 
-    /* Photo-rich Lakmé Standard Service Card styled with Nayantara Luminous Tokens */
+    /* Photo-rich Lakmé Standard Service Card */
     .menu-card {
       background: var(--bg-glass-card);
       backdrop-filter: blur(14px);
@@ -898,13 +853,18 @@
       gap: 12px;
     }
 
+    .price-block {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
     .price-block strong {
       display: block;
-      font-size: clamp(1.2rem, 2.2vw, 1.38rem);
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 700;
+      font-size: clamp(1.18rem, 2.2vw, 1.35rem);
+      font-weight: 800;
       color: var(--brand-burgundy);
-      line-height: 1.1;
+      letter-spacing: -0.01em;
     }
 
     .price-block span {
@@ -912,6 +872,7 @@
       color: var(--text-dim);
       text-transform: uppercase;
       letter-spacing: 0.04em;
+      margin-top: 2px;
     }
 
     /* Academy Program Cards */
@@ -1305,7 +1266,7 @@
       color: var(--text-dim);
     }
 
-    /* Floating Demo Concierge Button (Safe-Area Aware for iOS Home Indicator & Android Nav Bar) */
+    /* Floating Demo Concierge Button */
     .concierge-badge {
       position: fixed;
       bottom: calc(clamp(16px, 3vw, 28px) + env(safe-area-inset-bottom, 0px));
@@ -1326,16 +1287,6 @@
       cursor: pointer;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
       touch-action: manipulation;
-    }
-
-    .concierge-badge:hover, .concierge-badge:focus-visible {
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 14px 32px rgba(225, 29, 72, 0.48);
-      color: white;
-    }
-
-    .concierge-badge:active {
-      transform: scale(0.95);
     }
 
     /* Modals */
@@ -1419,9 +1370,6 @@
       .header-ctas .btn-outline {
         display: none;
       }
-    }
-
-    @media (max-width: 1024px) {
       .cards-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -1438,6 +1386,9 @@
     }
 
     @media (max-width: 860px) {
+      .header-ctas .btn {
+        display: none !important;
+      }
       .hero-grid {
         grid-template-columns: 1fr;
       }
@@ -1454,19 +1405,9 @@
     }
 
     @media (max-width: 640px) {
-      .top-strip-left {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 3px;
-      }
       .header-island {
         height: 58px;
-        padding: 0 6px 0 12px;
-      }
-      .header-ctas .btn-gold {
-        padding: 8px 12px;
-        min-height: 44px;
-        font-size: 0.76rem;
+        padding: 0 8px 0 14px;
       }
       .cards-grid {
         grid-template-columns: 1fr;
@@ -1497,17 +1438,6 @@
         flex-direction: column;
         align-items: flex-start;
         text-align: left;
-        padding-bottom: 48px;
-      }
-      .concierge-badge span {
-        display: none;
-      }
-      .concierge-badge {
-        padding: 0;
-        border-radius: 50%;
-        width: 52px;
-        height: 52px;
-        justify-content: center;
       }
     }
 
@@ -1534,28 +1464,6 @@
 
   <!-- Dynamic Living Ambient Background Canvas -->
   <div class="dynamic-bg-canvas" id="ambientBg" aria-hidden="true"></div>
-
-  <!-- Top Notice Strip -->
-  <div class="top-strip">
-    <div class="container top-strip-inner">
-      <div class="top-strip-left">
-        <span class="top-strip-item">
-          <i data-lucide="map-pin" size="14" style="color: var(--brand-coral);" aria-hidden="true"></i>
-          24 Park Avenue, Alipore Enclave, Kolkata
-        </span>
-        <span class="top-strip-item">
-          <i data-lucide="phone" size="14" style="color: var(--brand-coral);" aria-hidden="true"></i>
-          Demo Concierge: +91 90000 00000
-        </span>
-      </div>
-      <div>
-        <span class="top-strip-item" style="color: var(--brand-gold); font-weight: 700;">
-          <i data-lucide="sparkles" size="14" aria-hidden="true"></i>
-          Interactive Showcase Demo &bull; Webjackers Portfolio
-        </span>
-      </div>
-    </div>
-  </div>
 
   <!-- Floating Glassmorphic Pill Navigation Island -->
   <header class="site-header">
@@ -1703,15 +1611,15 @@
 
           <div class="hero-stats-row">
             <div class="hero-stat-item">
-              <strong>4.8 ★</strong>
+              <strong class="num-clean">4.8 ★</strong>
               <span>Google Verified</span>
             </div>
             <div class="hero-stat-item" style="border-left: 1px solid var(--border-subtle); padding-left: clamp(10px, 2vw, 18px);">
-              <strong>1,500+</strong>
+              <strong class="num-clean">1,500+</strong>
               <span>Bridal Clients</span>
             </div>
             <div class="hero-stat-item" style="border-left: 1px solid var(--border-subtle); padding-left: clamp(10px, 2vw, 18px);">
-              <strong>100%</strong>
+              <strong class="num-clean">100%</strong>
               <span>Hands-on Labs</span>
             </div>
           </div>
@@ -1740,9 +1648,7 @@
     </div>
   </section>
 
-  <!-- ==========================================================
-       LAKMÉ STANDARD ARTISTRY SERVICES MATRIX (Copied & Restyled from page.html)
-       ========================================================== -->
+  <!-- Lakmé Standard Artistry Services Matrix -->
   <section class="section-wrap" id="services">
     <div class="container">
       <div class="sec-head">
@@ -1789,7 +1695,7 @@
           </div>
           <div class="card-footer">
             <div class="price-block">
-              <strong>₹8,499</strong>
+              <strong class="num-clean">₹8,499</strong>
               <span>Starting Rate</span>
             </div>
             <button onclick="prefillBooking('Bridal HD & Airbrush Couture', 'salon')" class="btn btn-outline" style="min-height: 38px; padding: 7px 16px; font-size: 0.8rem;">
@@ -1814,7 +1720,7 @@
           </div>
           <div class="card-footer">
             <div class="price-block">
-              <strong>₹3,999</strong>
+              <strong class="num-clean">₹3,999</strong>
               <span>Length Dependent</span>
             </div>
             <button onclick="prefillBooking('Botoplex & Nanoplastia Therapy', 'salon')" class="btn btn-outline" style="min-height: 38px; padding: 7px 16px; font-size: 0.8rem;">
@@ -1839,7 +1745,7 @@
           </div>
           <div class="card-footer">
             <div class="price-block">
-              <strong>₹2,499</strong>
+              <strong class="num-clean">₹2,499</strong>
               <span>Per Session</span>
             </div>
             <button onclick="prefillBooking('Clinical Hydra-Peel Radiance', 'salon')" class="btn btn-outline" style="min-height: 38px; padding: 7px 16px; font-size: 0.8rem;">
@@ -1864,7 +1770,7 @@
           </div>
           <div class="card-footer">
             <div class="price-block">
-              <strong>₹1,499</strong>
+              <strong class="num-clean">₹1,499</strong>
               <span>Full Set</span>
             </div>
             <button onclick="prefillBooking('Sculpted Gel Extensions & Art', 'salon')" class="btn btn-outline" style="min-height: 38px; padding: 7px 16px; font-size: 0.8rem;">
@@ -1889,7 +1795,7 @@
           </div>
           <div class="card-footer">
             <div class="price-block">
-              <strong>₹4,499</strong>
+              <strong class="num-clean">₹4,499</strong>
               <span>Starting Basis</span>
             </div>
             <button onclick="prefillBooking('Balayage & Couture Highlights', 'salon')" class="btn btn-outline" style="min-height: 38px; padding: 7px 16px; font-size: 0.8rem;">
@@ -1914,7 +1820,7 @@
           </div>
           <div class="card-footer">
             <div class="price-block">
-              <strong>₹3,499</strong>
+              <strong class="num-clean">₹3,499</strong>
               <span>Per Look</span>
             </div>
             <button onclick="prefillBooking('Reception & Party Glow', 'salon')" class="btn btn-outline" style="min-height: 38px; padding: 7px 16px; font-size: 0.8rem;">
@@ -1937,7 +1843,7 @@
       </div>
 
       <div class="transformation-container">
-        <!-- Interactive Split Slider Component with Pointer/Touch Support -->
+        <!-- Interactive Split Slider Component -->
         <div class="split-image-viewer" id="splitViewer" aria-label="Before and After transformation slider comparison">
           <!-- Layer Before -->
           <div class="split-layer layer-before">
@@ -1946,7 +1852,7 @@
             </span>
           </div>
 
-          <!-- Layer After (Adjusted by Slider) -->
+          <!-- Layer After -->
           <div class="split-layer layer-after" id="afterLayer">
             <span style="background: var(--brand-burgundy); color: #FFFFFF; padding: 5px 14px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; width: max-content;">
               Aurelia Bridal HD Glam
@@ -1975,11 +1881,11 @@
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px;">
             <div style="background: #FFF1F2; padding: 14px; border-radius: 12px; border: 1px solid rgba(225, 29, 72, 0.12);">
-              <strong style="color: var(--brand-burgundy); font-size: 1.15rem; display: block;">100%</strong>
+              <strong class="num-clean" style="color: var(--brand-burgundy); font-size: 1.15rem; font-weight: 800; display: block; margin-bottom: 2px;">100%</strong>
               <span style="font-size: 0.75rem; color: var(--text-muted);">Tear &amp; Sweat-Proof Guarantee</span>
             </div>
             <div style="background: #FFFBEB; padding: 14px; border-radius: 12px; border: 1px solid rgba(217, 119, 6, 0.15);">
-              <strong style="color: #B45309; font-size: 1.15rem; display: block;">No Flashback</strong>
+              <strong class="num-clean" style="color: #B45309; font-size: 1.15rem; font-weight: 800; display: block; margin-bottom: 2px;">0% Flashback</strong>
               <span style="font-size: 0.75rem; color: var(--text-muted);">Studio Camera Calibrated Finish</span>
             </div>
           </div>
@@ -2146,11 +2052,11 @@
               </div>
               <div style="display: flex; gap: 12px; align-items: center;">
                 <i data-lucide="phone" size="18" style="color: var(--brand-coral); flex-shrink: 0;" aria-hidden="true"></i>
-                <span style="font-size: 0.88rem; color: var(--text-main); font-weight: 600;">+91 90000 00000 (Demo Concierge Desk)</span>
+                <span class="num-clean" style="font-size: 0.88rem; color: var(--text-main); font-weight: 600;">+91 90000 00000 (Demo Concierge Desk)</span>
               </div>
               <div style="display: flex; gap: 12px; align-items: flex-start;">
                 <i data-lucide="clock" size="18" style="color: var(--brand-coral); flex-shrink: 0; margin-top: 2px;" aria-hidden="true"></i>
-                <span style="font-size: 0.88rem; color: var(--text-main);">Mon-Wed, Fri-Sun: 10:30 AM – 8:00 PM (Thu Closed)</span>
+                <span class="num-clean" style="font-size: 0.88rem; color: var(--text-main);">Mon-Wed, Fri-Sun: 10:30 AM – 8:00 PM (Thu Closed)</span>
               </div>
             </div>
           </div>
@@ -2284,11 +2190,12 @@
     </div>
   </footer>
 
-  <!-- Floating Live Concierge CTA (Replaces External WhatsApp Redirect) -->
+  <!-- Floating Live Concierge CTA (Commented out per user request)
   <button type="button" onclick="scrollToDemoConcierge()" class="concierge-badge" aria-label="Book Demo Slot">
     <i data-lucide="sparkles" size="20" aria-hidden="true"></i>
     <span>Book Demo Slot</span>
   </button>
+  -->
 
   <!-- Course Syllabus Modal -->
   <div class="modal-overlay" id="syllabusModal" role="dialog" aria-modal="true" aria-labelledby="modalCourseTitle" onclick="if(event.target===this) closeSyllabusModal()">
@@ -2608,7 +2515,6 @@
       const dxCenter = e.clientX - (rect.left + rect.width / 2);
       const dyCenter = e.clientY - (rect.top + rect.height / 2);
       const dist = Math.hypot(dxCenter, dyCenter);
-      // Only capture drag inside the central crystal radius so outer edge touches scroll the page naturally
       if (dist <= rect.width * 0.42) {
         isDragging = true;
         lastMouseX = e.clientX;
