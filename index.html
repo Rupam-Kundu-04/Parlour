@@ -1,0 +1,2865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#FFF1F2">
+  <title>Aurelia Luxe Bridal Salon &amp; Academy | Webjackers Showcase Demo</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      /* Bright, Luminous Luxury Palette (Nayantara Signature Tokens) */
+      --bg-light: #FFFBFB;
+      --bg-surface: #FFFFFF;
+      --bg-glass: rgba(255, 255, 255, 0.92);
+      --bg-glass-card: rgba(255, 255, 255, 0.92);
+      
+      --rose-quartz: #FFF1F2;
+      --champagne-cream: #FFFBEB;
+      --luminous-coral: #FFE4E6;
+      --radiant-lilac: #F3E8FF;
+      --golden-amber: #FEF3C7;
+      
+      --brand-burgundy: #4A1224;
+      --brand-rose: #C24168;
+      --brand-gold: #B48328;
+      --brand-gold-light: #F7DF94;
+      --brand-coral: #E11D48;
+      
+      --text-main: #24131A;
+      --text-muted: #5A4752;
+      --text-dim: #7C6873;
+      
+      --border-subtle: rgba(194, 65, 104, 0.16);
+      --border-active: rgba(180, 131, 40, 0.55);
+      --shadow-luxe: 0 16px 36px -10px rgba(92, 24, 49, 0.10), 0 4px 16px -2px rgba(0, 0, 0, 0.04);
+      --shadow-glow: 0 0 35px rgba(225, 29, 72, 0.18);
+      
+      /* Dynamic Gradient Coordinates */
+      --mouse-x: 50%;
+      --mouse-y: 50%;
+      --accent-hue: 345deg;
+      --face-lighting: #FFF1F2;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-light);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding-left: env(safe-area-inset-left, 0px);
+      padding-right: env(safe-area-inset-right, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+      position: relative;
+      transition: background-color 0.4s ease;
+    }
+
+    /* Living Interactive Background Mesh */
+    .dynamic-bg-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      background: 
+        radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(254, 243, 199, 0.75) 0%, transparent 45%),
+        radial-gradient(circle at calc(100% - var(--mouse-x)) calc(100% - var(--mouse-y)), rgba(243, 232, 255, 0.65) 0%, transparent 50%),
+        radial-gradient(circle at 15% 25%, rgba(255, 228, 230, 0.85) 0%, transparent 55%),
+        radial-gradient(circle at 85% 75%, rgba(255, 241, 242, 0.9) 0%, transparent 60%),
+        linear-gradient(135deg, #FFFDFD 0%, #FFF8F8 50%, #FFF5F7 100%);
+      transition: background 0.25s ease-out;
+      filter: saturate(1.1);
+    }
+
+    .font-serif {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding-left: max(clamp(14px, 4vw, 28px), env(safe-area-inset-left, 0px));
+      padding-right: max(clamp(14px, 4vw, 28px), env(safe-area-inset-right, 0px));
+    }
+
+    /* ==========================================================
+       TOP NOTICE STRIP (iOS Dynamic Island & Android Notch Aware)
+       ========================================================== */
+    .top-strip {
+      background: var(--rose-quartz);
+      color: var(--text-muted);
+      font-size: clamp(0.72rem, 1.8vw, 0.8rem);
+      padding-top: calc(8px + env(safe-area-inset-top, 0px));
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .top-strip-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px 16px;
+    }
+
+    .top-strip-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .top-strip-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+    }
+
+    /* ==========================================================
+       FLOATING GLASSMORPHIC PILL NAVIGATION ISLAND
+       ========================================================== */
+    .site-header {
+      position: sticky;
+      top: max(10px, env(safe-area-inset-top, 10px));
+      z-index: 100;
+      margin: 0 auto;
+      max-width: 1240px;
+      padding: 10px max(clamp(12px, 3vw, 24px), env(safe-area-inset-right, 0px)) 0 max(clamp(12px, 3vw, 24px), env(safe-area-inset-left, 0px));
+    }
+
+    .header-island {
+      background: var(--bg-glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      box-shadow: var(--shadow-luxe);
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: clamp(60px, 8vw, 72px);
+      padding: 0 10px 0 clamp(14px, 2.5vw, 24px);
+      gap: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: clamp(8px, 1.8vw, 12px);
+      min-width: 0;
+    }
+
+    .brand-crest {
+      width: clamp(36px, 5vw, 44px);
+      height: clamp(36px, 5vw, 44px);
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FFE4E6 0%, #F43F5E 50%, #BE123C 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+      font-weight: 700;
+      border: 2px solid #FFFFFF;
+      box-shadow: 0 6px 16px rgba(225, 29, 72, 0.25);
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      min-width: 0;
+    }
+
+    .brand-title h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.12rem, 2.3vw, 1.48rem);
+      letter-spacing: 0.03em;
+      line-height: 1.08;
+      background: linear-gradient(135deg, #4A1224 0%, #BE123C 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand-title span {
+      font-size: clamp(0.58rem, 1.3vw, 0.68rem);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--brand-gold);
+      display: block;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: clamp(14px, 2vw, 24px);
+      list-style: none;
+    }
+
+    .nav-menu a {
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+      padding: 6px 2px;
+      position: relative;
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-menu a:hover, .nav-menu a:focus-visible {
+      color: var(--brand-coral);
+    }
+
+    .nav-menu a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--brand-coral);
+      transition: width 0.22s ease;
+    }
+
+    .nav-menu a:hover::after {
+      width: 100%;
+    }
+
+    .header-ctas {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      shrink: 0;
+    }
+
+    /* Mobile Menu Toggle Button */
+    .mobile-menu-btn {
+      display: none;
+      background: var(--rose-quartz);
+      border: 1px solid var(--border-subtle);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      align-items: center;
+      justify-content: center;
+      color: var(--brand-burgundy);
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .mobile-menu-btn:hover, .mobile-menu-btn:focus-visible {
+      background: #FFFFFF;
+      color: var(--brand-coral);
+      border-color: var(--brand-coral);
+    }
+
+    /* Mobile Drawer Overlay & Panel */
+    .mobile-drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(36, 19, 26, 0.45);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 150;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .mobile-drawer-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: min(86vw, 350px);
+      height: 100vh;
+      height: 100dvh;
+      background: #FFFFFF;
+      z-index: 160;
+      box-shadow: -10px 0 35px rgba(74, 18, 36, 0.15);
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      padding-top: calc(20px + env(safe-area-inset-top, 0px));
+      padding-right: calc(20px + env(safe-area-inset-right, 0px));
+      padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+      padding-left: 20px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+    }
+
+    .mobile-drawer.active {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 22px;
+    }
+
+    .drawer-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      list-style: none;
+      margin-bottom: 28px;
+    }
+
+    .drawer-nav a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 16px;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+      min-height: 48px;
+      transition: all 0.2s;
+      touch-action: manipulation;
+    }
+
+    .drawer-nav a:hover, .drawer-nav a:focus-visible, .drawer-nav a:active {
+      background: #FFF1F2;
+      color: var(--brand-coral);
+    }
+
+    /* Buttons with 48px Android Material & Apple HIG tap targets */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 22px;
+      min-height: 48px;
+      border-radius: 999px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: all 0.22s ease;
+      border: 1px solid transparent;
+      user-select: none;
+      touch-action: manipulation;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .drawer-nav a:hover, .drawer-nav a:focus-visible {
+      background: #FFF1F2;
+      color: var(--brand-coral);
+    }
+
+    /* Buttons with 44px+ tap targets */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 22px;
+      min-height: 44px;
+      border-radius: 999px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      border: 1px solid transparent;
+      user-select: none;
+      touch-action: manipulation;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #F43F5E 0%, #E11D48 60%, #9F1239 100%);
+      color: #FFFFFF;
+      box-shadow: 0 6px 18px rgba(225, 29, 72, 0.26);
+    }
+
+    .btn-gold:hover, .btn-gold:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(225, 29, 72, 0.38);
+    }
+
+    .btn-outline {
+      border: 1px solid var(--border-active);
+      color: var(--brand-burgundy);
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(8px);
+    }
+
+    .btn-outline:hover, .btn-outline:focus-visible {
+      background: #FFFFFF;
+      border-color: var(--brand-coral);
+      color: var(--brand-coral);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(225, 29, 72, 0.12);
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      padding: clamp(28px, 5vw, 58px) 0 clamp(40px, 8vw, 76px);
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: clamp(24px, 4vw, 44px);
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 16px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(194, 65, 104, 0.24);
+      border-radius: 999px;
+      font-size: clamp(0.7rem, 1.4vw, 0.78rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--brand-rose);
+      margin-bottom: clamp(14px, 2.5vw, 20px);
+      box-shadow: 0 4px 12px rgba(225, 29, 72, 0.06);
+      max-width: 100%;
+      white-space: normal;
+    }
+
+    .hero h2 {
+      font-size: clamp(2.3rem, 5.5vw, 4.4rem);
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.015em;
+      margin-bottom: clamp(14px, 2.5vw, 22px);
+      color: var(--brand-burgundy);
+    }
+
+    .hero h2 span {
+      font-style: italic;
+      background: linear-gradient(135deg, #E11D48 0%, #D97706 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-desc {
+      font-size: clamp(0.94rem, 1.8vw, 1.06rem);
+      color: var(--text-muted);
+      max-width: 530px;
+      margin-bottom: clamp(20px, 3.5vw, 30px);
+      line-height: 1.7;
+    }
+
+    /* Glam Mode Selector Pills */
+    .glam-mode-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: clamp(22px, 3.5vw, 32px);
+      flex-wrap: wrap;
+    }
+
+    .glam-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      color: var(--text-dim);
+      margin-right: 4px;
+    }
+
+    .glam-btn {
+      padding: 9px 14px;
+      min-height: 44px;
+      border-radius: 999px;
+      border: 1px solid rgba(194, 65, 104, 0.22);
+      background: rgba(255, 255, 255, 0.85);
+      color: var(--text-main);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.2s ease;
+      touch-action: manipulation;
+    }
+
+    .glam-btn:active {
+      transform: scale(0.96);
+    }
+
+    .glam-btn .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--brand-coral);
+      flex-shrink: 0;
+    }
+
+    .glam-btn.active, .glam-btn:hover {
+      background: #FFFFFF;
+      border-color: var(--brand-coral);
+      color: var(--brand-coral);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(225, 29, 72, 0.14);
+    }
+
+    .hero-cta-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: clamp(24px, 4vw, 36px);
+    }
+
+    .hero-stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(12px, 3vw, 24px);
+      align-items: center;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: clamp(16px, 3vw, 24px);
+    }
+
+    .hero-stat-item {
+      min-width: 0;
+    }
+
+    .hero-stat-item strong {
+      font-size: clamp(1.35rem, 3vw, 1.65rem);
+      font-weight: 800;
+      color: var(--brand-burgundy);
+      font-family: 'Cormorant Garamond', serif;
+      display: block;
+      line-height: 1.1;
+    }
+
+    .hero-stat-item span {
+      font-size: clamp(0.68rem, 1.4vw, 0.76rem);
+      color: var(--text-dim);
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* 3D Kinetic Crystal Stage */
+    .portrait-stage {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      min-height: clamp(300px, 45vw, 480px);
+      margin: 0 auto;
+    }
+
+    .halo-aura {
+      position: absolute;
+      width: min(92vw, 440px);
+      height: min(92vw, 440px);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(254, 243, 199, 0.9) 0%, rgba(255, 228, 230, 0.7) 45%, rgba(243, 232, 255, 0) 70%);
+      filter: blur(28px);
+      z-index: 1;
+      animation: pulseAura 6s ease-in-out infinite alternate;
+      transition: all 0.5s ease;
+      pointer-events: none;
+    }
+
+    @keyframes pulseAura {
+      0% { transform: scale(0.94); opacity: 0.8; }
+      100% { transform: scale(1.04); opacity: 1; }
+    }
+
+    .crystal-canvas-wrapper {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      max-width: 440px;
+      aspect-ratio: 1 / 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      touch-action: pan-y;
+    }
+
+    #prismCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: grab;
+      border-radius: 24px;
+      touch-action: pan-y;
+    }
+
+    #prismCanvas:active {
+      cursor: grabbing;
+    }
+
+    /* Floating Badges */
+    .floating-pill {
+      position: absolute;
+      z-index: 5;
+      background: var(--bg-glass-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      padding: 9px 16px;
+      border-radius: 999px;
+      box-shadow: 0 10px 22px -6px rgba(74, 18, 36, 0.12);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--brand-burgundy);
+      pointer-events: none;
+      animation: floatBadge 4.5s ease-in-out infinite alternate;
+    }
+
+    .pill-1 {
+      top: 10%;
+      left: 0;
+    }
+    .pill-2 {
+      bottom: 12%;
+      right: 0;
+      animation-delay: -2.2s;
+    }
+
+    @keyframes floatBadge {
+      0% { transform: translateY(0px); }
+      100% { transform: translateY(-8px); }
+    }
+
+    .pill-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FFE4E6 0%, #FECDD3 100%);
+      color: var(--brand-coral);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* Section Styles */
+    .section-wrap {
+      padding: clamp(48px, 8vw, 84px) 0;
+      position: relative;
+    }
+
+    .sec-head {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto clamp(28px, 5vw, 48px);
+    }
+
+    .sec-head span {
+      font-size: clamp(0.72rem, 1.4vw, 0.78rem);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--brand-coral);
+      font-weight: 700;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .sec-head h3 {
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--brand-burgundy);
+      letter-spacing: -0.01em;
+      margin-bottom: 12px;
+      line-height: 1.15;
+    }
+
+    .sec-head p {
+      color: var(--text-muted);
+      font-size: clamp(0.9rem, 1.8vw, 1rem);
+      line-height: 1.6;
+    }
+
+    /* ==========================================================
+       LAKMÉ STANDARD ARTISTRY CATEGORY TABS & PHOTO SERVICE CARDS
+       ========================================================== */
+    .category-filter-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: clamp(24px, 4vw, 40px);
+      padding: 2px;
+    }
+
+    .filter-tab {
+      padding: 10px 18px;
+      min-height: 48px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--text-muted);
+      font-size: clamp(0.8rem, 1.6vw, 0.86rem);
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.25s ease;
+      touch-action: manipulation;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .filter-tab:active {
+      transform: scale(0.96);
+    }
+
+    .filter-tab:hover, .filter-tab.active {
+      background: var(--rose-quartz);
+      border-color: var(--brand-coral);
+      color: var(--brand-coral);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(225, 29, 72, 0.12);
+    }
+
+    /* Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(16px, 2.5vw, 24px);
+    }
+
+    /* Photo-rich Lakmé Standard Service Card styled with Nayantara Luminous Tokens */
+    .menu-card {
+      background: var(--bg-glass-card);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow-luxe);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-active);
+      box-shadow: 0 20px 42px -10px rgba(190, 18, 60, 0.15);
+      background: #FFFFFF;
+    }
+
+    .card-photo-hero {
+      position: relative;
+      height: clamp(180px, 24vw, 215px);
+      overflow: hidden;
+      background: var(--luminous-coral);
+    }
+
+    .card-photo-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .menu-card:hover .card-photo-hero img {
+      transform: scale(1.05);
+    }
+
+    .card-badge-pill {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: var(--brand-coral);
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      border-radius: 999px;
+      box-shadow: 0 2px 8px rgba(74, 18, 36, 0.08);
+    }
+
+    .card-body {
+      padding: clamp(18px, 3vw, 24px);
+      flex: 1;
+    }
+
+    .highlight-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .mini-pill {
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: var(--rose-quartz);
+      color: var(--brand-rose);
+      padding: 3px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .card-body h4 {
+      font-size: clamp(1.25rem, 2.2vw, 1.45rem);
+      font-weight: 700;
+      margin-bottom: 8px;
+      line-height: 1.25;
+      color: var(--brand-burgundy);
+    }
+
+    .card-body p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .card-footer {
+      padding: 14px clamp(18px, 3vw, 24px);
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.65);
+      gap: 12px;
+    }
+
+    .price-block strong {
+      display: block;
+      font-size: clamp(1.2rem, 2.2vw, 1.38rem);
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      color: var(--brand-burgundy);
+      line-height: 1.1;
+    }
+
+    .price-block span {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* Academy Program Cards */
+    .service-card {
+      background: var(--bg-glass-card);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: clamp(22px, 3vw, 30px);
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow-luxe);
+    }
+
+    .service-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-active);
+      box-shadow: 0 20px 42px -10px rgba(190, 18, 60, 0.14);
+      background: #FFFFFF;
+    }
+
+    .card-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 12px;
+      background: #F3E8FF;
+      color: #7E22CE;
+      border-radius: 999px;
+      margin-bottom: 14px;
+      font-weight: 700;
+      width: fit-content;
+    }
+
+    .service-card h4 {
+      font-size: clamp(1.25rem, 2vw, 1.45rem);
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--brand-burgundy);
+      line-height: 1.25;
+    }
+
+    .service-card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .service-features {
+      list-style: none;
+      margin-bottom: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .service-features li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.86rem;
+      color: var(--text-main);
+    }
+
+    .card-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-subtle);
+      gap: 10px;
+    }
+
+    .academy-perks {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 8px 0 18px;
+    }
+
+    .academy-tag {
+      font-size: 0.72rem;
+      background: #F3E8FF;
+      color: #7E22CE;
+      padding: 4px 9px;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+
+    /* Before & After Interactive Showcase */
+    .transformation-container {
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: clamp(20px, 3vw, 26px);
+      padding: clamp(20px, 4vw, 36px);
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: clamp(24px, 4vw, 40px);
+      align-items: center;
+      box-shadow: var(--shadow-luxe);
+    }
+
+    .split-image-viewer {
+      position: relative;
+      height: clamp(280px, 38vw, 380px);
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 12px 30px rgba(74, 18, 36, 0.08);
+      touch-action: none;
+      user-select: none;
+    }
+
+    .split-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: clamp(16px, 3vw, 24px);
+      pointer-events: none;
+    }
+
+    .layer-before {
+      background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(55, 30, 40, 0.8) 100%),
+                  radial-gradient(circle at center, #FCE7F3 0%, #F5D0FE 100%);
+    }
+
+    .layer-after {
+      background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(92, 14, 38, 0.85) 100%),
+                  radial-gradient(circle at center, #FFE4E6 0%, #FDA4AF 100%);
+      width: 50%;
+      border-right: 3px solid #BE123C;
+      transition: width 0.04s ease-out;
+    }
+
+    .split-slider {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: ew-resize;
+      z-index: 10;
+      touch-action: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .slider-handle-visual {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      box-shadow: 0 4px 16px rgba(225, 29, 72, 0.35);
+      border: 2px solid var(--brand-coral);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--brand-coral);
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    /* Academy Advantage Pillars */
+    .advantage-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(14px, 2vw, 20px);
+      margin-bottom: clamp(32px, 5vw, 48px);
+    }
+
+    .advantage-box {
+      background: var(--bg-glass-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: clamp(20px, 3vw, 26px) 18px;
+      text-align: center;
+      transition: all 0.25s ease;
+      box-shadow: 0 8px 20px -6px rgba(74, 18, 36, 0.05);
+    }
+
+    .advantage-box:hover {
+      border-color: var(--border-active);
+      transform: translateY(-3px);
+      background: #FFFFFF;
+    }
+
+    .advantage-icon {
+      width: 50px;
+      height: 50px;
+      margin: 0 auto 14px;
+      border-radius: 14px;
+      background: #FFE4E6;
+      color: var(--brand-coral);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .advantage-box h5 {
+      font-size: 1rem;
+      margin-bottom: 6px;
+      color: var(--brand-burgundy);
+      font-weight: 700;
+    }
+
+    .advantage-box p {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Dual Booking Hub */
+    .booking-wrapper {
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: clamp(20px, 3vw, 28px);
+      box-shadow: var(--shadow-luxe);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+    }
+
+    .booking-sidebar {
+      padding: clamp(24px, 5vw, 44px);
+      background: linear-gradient(145deg, #FFF1F2 0%, #FFFBEB 100%);
+      border-right: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .booking-form-area {
+      padding: clamp(24px, 5vw, 44px);
+    }
+
+    .form-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      background: #F1F5F9;
+      padding: 4px;
+      border-radius: 12px;
+    }
+
+    .form-tab-btn {
+      flex: 1;
+      padding: 10px;
+      min-height: 48px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-weight: 700;
+      font-size: clamp(0.82rem, 1.6vw, 0.88rem);
+      cursor: pointer;
+      transition: all 0.2s;
+      touch-action: manipulation;
+    }
+
+    .form-tab-btn.active {
+      background: #FFFFFF;
+      color: var(--brand-coral);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .input-field {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--brand-burgundy);
+      margin-bottom: 6px;
+      letter-spacing: 0.02em;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      background: #F8FAFC;
+      border: 1px solid #E2E8F0;
+      border-radius: 10px;
+      padding: 12px 14px;
+      min-height: 48px;
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 16px;
+      line-height: 1.4;
+      -webkit-appearance: none;
+      appearance: none;
+      transition: all 0.2s;
+    }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235A4752' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 40px;
+    }
+
+    input[type="date"] {
+      display: block;
+      max-width: 100%;
+      min-width: 0;
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--brand-coral);
+      box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.15);
+      background: #FFFFFF;
+    }
+
+    /* Location Section */
+    .location-box {
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      overflow: hidden;
+      background: #FFFFFF;
+      margin-top: 24px;
+      box-shadow: var(--shadow-luxe);
+    }
+
+    .loc-top {
+      padding: clamp(18px, 3vw, 24px) clamp(18px, 4vw, 30px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      background: #FFFDFC;
+    }
+
+    .map-frame-holder {
+      height: clamp(260px, 40vw, 360px);
+      width: 100%;
+      position: relative;
+      background: #E2E8F0;
+    }
+
+    .map-frame-holder iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: clamp(36px, 6vw, 48px) 0 28px;
+      background: #FFFFFF;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    /* Floating Demo Concierge Button (Safe-Area Aware for iOS Home Indicator & Android Nav Bar) */
+    .concierge-badge {
+      position: fixed;
+      bottom: calc(clamp(16px, 3vw, 28px) + env(safe-area-inset-bottom, 0px));
+      right: calc(clamp(16px, 3vw, 28px) + env(safe-area-inset-right, 0px));
+      background: linear-gradient(135deg, #F43F5E 0%, #E11D48 60%, #9F1239 100%);
+      color: white;
+      padding: 12px 20px;
+      min-height: 48px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      box-shadow: 0 10px 26px rgba(225, 29, 72, 0.38);
+      z-index: 95;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      touch-action: manipulation;
+    }
+
+    .concierge-badge:hover, .concierge-badge:focus-visible {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 14px 32px rgba(225, 29, 72, 0.48);
+      color: white;
+    }
+
+    .concierge-badge:active {
+      transform: scale(0.95);
+    }
+
+    /* Modals */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(36, 19, 26, 0.5);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding-top: calc(16px + env(safe-area-inset-top, 0px));
+      padding-right: calc(16px + env(safe-area-inset-right, 0px));
+      padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+      padding-left: calc(16px + env(safe-area-inset-left, 0px));
+      overscroll-behavior: contain;
+    }
+
+    .modal-box {
+      background: #FFFFFF;
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 600px;
+      max-height: 86dvh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      padding: clamp(22px, 4vw, 32px);
+      position: relative;
+      box-shadow: 0 20px 50px rgba(74, 18, 36, 0.2);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: #F1F5F9;
+      border: none;
+      color: var(--text-muted);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    .timeline-item {
+      padding: 12px 14px;
+      background: #FFF1F2;
+      border-left: 3px solid var(--brand-coral);
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 10px;
+    }
+
+    .timeline-item h6 {
+      font-size: 0.92rem;
+      color: var(--brand-burgundy);
+      margin-bottom: 3px;
+      font-weight: 700;
+    }
+
+    .timeline-item p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 1060px) {
+      .nav-menu {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: inline-flex;
+      }
+      .header-ctas .btn-outline {
+        display: none;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .cards-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .advantage-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .booking-wrapper {
+        grid-template-columns: 1fr;
+      }
+      .booking-sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border-subtle);
+      }
+    }
+
+    @media (max-width: 860px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-grid > div:first-child {
+        order: 1;
+      }
+      .portrait-stage {
+        order: 2;
+        margin-top: 10px;
+      }
+      .transformation-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .top-strip-left {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 3px;
+      }
+      .header-island {
+        height: 58px;
+        padding: 0 6px 0 12px;
+      }
+      .header-ctas .btn-gold {
+        padding: 8px 12px;
+        min-height: 44px;
+        font-size: 0.76rem;
+      }
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+      .advantage-grid {
+        grid-template-columns: 1fr;
+      }
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      .category-filter-row {
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding: 2px 4px 8px;
+        margin-left: -4px;
+        margin-right: -4px;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .category-filter-row::-webkit-scrollbar {
+        display: none;
+      }
+      .floating-pill {
+        display: none;
+      }
+      .footer-content {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+        padding-bottom: 48px;
+      }
+      .concierge-badge span {
+        display: none;
+      }
+      .concierge-badge {
+        padding: 0;
+        border-radius: 50%;
+        width: 52px;
+        height: 52px;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .brand-title h1 {
+        font-size: 1rem;
+      }
+      .brand-title span {
+        font-size: 0.54rem;
+        letter-spacing: 0.08em;
+      }
+      .hero-stats-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .hero-stat-item {
+        border-left: 2px solid var(--border-subtle);
+        padding-left: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Dynamic Living Ambient Background Canvas -->
+  <div class="dynamic-bg-canvas" id="ambientBg" aria-hidden="true"></div>
+
+  <!-- Top Notice Strip -->
+  <div class="top-strip">
+    <div class="container top-strip-inner">
+      <div class="top-strip-left">
+        <span class="top-strip-item">
+          <i data-lucide="map-pin" size="14" style="color: var(--brand-coral);" aria-hidden="true"></i>
+          24 Park Avenue, Alipore Enclave, Kolkata
+        </span>
+        <span class="top-strip-item">
+          <i data-lucide="phone" size="14" style="color: var(--brand-coral);" aria-hidden="true"></i>
+          Demo Concierge: +91 90000 00000
+        </span>
+      </div>
+      <div>
+        <span class="top-strip-item" style="color: var(--brand-gold); font-weight: 700;">
+          <i data-lucide="sparkles" size="14" aria-hidden="true"></i>
+          Interactive Showcase Demo &bull; Webjackers Portfolio
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Glassmorphic Pill Navigation Island -->
+  <header class="site-header">
+    <div class="header-island">
+      <a href="#" class="brand-wrap" aria-label="Aurelia Luxe Bridal Salon and Academy Homepage">
+        <div class="brand-crest">A</div>
+        <div class="brand-title">
+          <h1>AURELIA LUXE</h1>
+          <span>Bridal Couture Salon &amp; Academy</span>
+        </div>
+      </a>
+
+      <nav aria-label="Desktop Navigation">
+        <ul class="nav-menu">
+          <li><a href="#services">Salon Rituals</a></li>
+          <li><a href="#academy">Academy Courses</a></li>
+          <li><a href="#transformations">Transformations</a></li>
+          <li><a href="#booking">Book Appointment</a></li>
+          <li><a href="#location">Find Us</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-ctas">
+        <a href="#booking" class="btn btn-outline" style="min-height: 40px; padding: 8px 16px; font-size: 0.82rem;" onclick="setBookingTab('academy')">
+          <i data-lucide="graduation-cap" size="15" aria-hidden="true"></i>
+          Academy Admissions
+        </a>
+        <a href="#booking" class="btn btn-gold" style="min-height: 40px; padding: 8px 18px; font-size: 0.82rem;" onclick="setBookingTab('salon')">
+          <i data-lucide="sparkles" size="15" aria-hidden="true"></i>
+          Book Salon
+        </a>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open Navigation Menu" onclick="toggleMobileDrawer(true)">
+          <i data-lucide="menu" size="20" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="mobile-drawer-overlay" id="drawerOverlay" onclick="toggleMobileDrawer(false)"></div>
+  <aside class="mobile-drawer" id="mobileDrawer" aria-label="Mobile Navigation Drawer">
+    <div class="drawer-header">
+      <div class="brand-wrap">
+        <div class="brand-crest" style="width: 36px; height: 36px; font-size: 1.3rem;">A</div>
+        <div class="brand-title">
+          <strong style="color: var(--brand-burgundy); font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; display: block; line-height: 1.1;">AURELIA LUXE</strong>
+          <span style="font-size: 0.68rem; color: var(--brand-gold);">Bridal Salon &amp; Academy</span>
+        </div>
+      </div>
+      <button class="close-btn" style="position: static;" aria-label="Close Navigation Menu" onclick="toggleMobileDrawer(false)">
+        <i data-lucide="x" size="20" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <ul class="drawer-nav">
+      <li>
+        <a href="#services" onclick="toggleMobileDrawer(false)">
+          <i data-lucide="sparkles" size="18" style="color: var(--brand-coral);" aria-hidden="true"></i>
+          Salon Rituals
+        </a>
+      </li>
+      <li>
+        <a href="#academy" onclick="toggleMobileDrawer(false)">
+          <i data-lucide="graduation-cap" size="18" style="color: #7E22CE;" aria-hidden="true"></i>
+          Academy Courses
+        </a>
+      </li>
+      <li>
+        <a href="#transformations" onclick="toggleMobileDrawer(false)">
+          <i data-lucide="wand-2" size="18" style="color: var(--brand-gold);" aria-hidden="true"></i>
+          Transformations
+        </a>
+      </li>
+      <li>
+        <a href="#booking" onclick="toggleMobileDrawer(false)">
+          <i data-lucide="calendar" size="18" style="color: var(--brand-coral);" aria-hidden="true"></i>
+          Book Appointment
+        </a>
+      </li>
+      <li>
+        <a href="#location" onclick="toggleMobileDrawer(false)">
+          <i data-lucide="map-pin" size="18" style="color: #059669;" aria-hidden="true"></i>
+          Find Us
+        </a>
+      </li>
+    </ul>
+
+    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: auto; padding-top: 20px; border-top: 1px solid var(--border-subtle);">
+      <a href="#booking" class="btn btn-gold" style="width: 100%;" onclick="toggleMobileDrawer(false); setBookingTab('salon');">
+        <i data-lucide="sparkles" size="16" aria-hidden="true"></i>
+        Book Salon
+      </a>
+      <a href="#booking" class="btn btn-outline" style="width: 100%;" onclick="toggleMobileDrawer(false); setBookingTab('academy');">
+        <i data-lucide="graduation-cap" size="16" aria-hidden="true"></i>
+        Academy Admissions
+      </a>
+    </div>
+  </aside>
+
+  <!-- Hero Section with Interactive 3D Crystal Stage -->
+  <section class="hero" id="heroSec">
+    <div class="container">
+      <div class="hero-grid">
+        <!-- Hero Text & Controls -->
+        <div>
+          <div class="hero-badge">
+            <i data-lucide="sparkles" size="14" aria-hidden="true"></i>
+            Luxury Beauty Hub &amp; Certified Academy &bull; Kolkata Flagship
+          </div>
+          <h2 class="font-serif">
+            Elegance Redefined.<br>
+            <span>Artistry Perfected.</span>
+          </h2>
+          <p class="hero-desc">
+            Kolkata’s premier destination for high-definition bridal couture makeovers, clinical skin revival, advanced hair aesthetics, and internationally accredited professional cosmetology certification.
+          </p>
+
+          <!-- Interactive Glam Mode Switcher -->
+          <div class="glam-mode-row" role="group" aria-label="Aesthetic Lighting Theme">
+            <span class="glam-label">Aesthetic Mood:</span>
+            <button class="glam-btn active" onclick="setGlamMode('bridal', this)">
+              <span class="dot" style="background: #E11D48;" aria-hidden="true"></span> Bridal Glow
+            </button>
+            <button class="glam-btn" onclick="setGlamMode('sunset', this)">
+              <span class="dot" style="background: #D97706;" aria-hidden="true"></span> Sunset Glam
+            </button>
+            <button class="glam-btn" onclick="setGlamMode('editorial', this)">
+              <span class="dot" style="background: #9333EA;" aria-hidden="true"></span> Editorial Chic
+            </button>
+            <button class="glam-btn" onclick="setGlamMode('academy', this)">
+              <span class="dot" style="background: #059669;" aria-hidden="true"></span> Academy Gold
+            </button>
+          </div>
+
+          <div class="hero-cta-group">
+            <a href="#services" class="btn btn-gold">
+              <i data-lucide="calendar" size="16" aria-hidden="true"></i>
+              Explore Salon Rate Card
+            </a>
+            <a href="#academy" class="btn btn-outline">
+              <i data-lucide="book-open" size="16" aria-hidden="true"></i>
+              View Academy Diplomas
+            </a>
+          </div>
+
+          <div class="hero-stats-row">
+            <div class="hero-stat-item">
+              <strong>4.8 ★</strong>
+              <span>Google Verified</span>
+            </div>
+            <div class="hero-stat-item" style="border-left: 1px solid var(--border-subtle); padding-left: clamp(10px, 2vw, 18px);">
+              <strong>1,500+</strong>
+              <span>Bridal Clients</span>
+            </div>
+            <div class="hero-stat-item" style="border-left: 1px solid var(--border-subtle); padding-left: clamp(10px, 2vw, 18px);">
+              <strong>100%</strong>
+              <span>Hands-on Labs</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive 3D Crystal Centerpiece -->
+        <div class="portrait-stage" id="portraitStage" title="Drag with mouse or touch to rotate the 3D Luminescent Crystal">
+          <div class="halo-aura" id="haloAura" aria-hidden="true"></div>
+
+          <!-- Floating Badges -->
+          <div class="floating-pill pill-1">
+            <div class="pill-icon"><i data-lucide="sparkles" size="14" aria-hidden="true"></i></div>
+            <span>Bridal HD Perfection</span>
+          </div>
+          <div class="floating-pill pill-2">
+            <div class="pill-icon"><i data-lucide="award" size="14" aria-hidden="true"></i></div>
+            <span>ISO Certified Academy</span>
+          </div>
+
+          <!-- Interactive 3D Luminescent Beauty Prism Canvas -->
+          <div class="crystal-canvas-wrapper">
+            <canvas id="prismCanvas" aria-label="3D Interactive Luminescent Crystal Prism Graphic"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       LAKMÉ STANDARD ARTISTRY SERVICES MATRIX (Copied & Restyled from page.html)
+       ========================================================== -->
+  <section class="section-wrap" id="services">
+    <div class="container">
+      <div class="sec-head">
+        <span>Lakmé Standard Artistry</span>
+        <h3 class="font-serif">Curated Beauty &amp; Wellness Rituals</h3>
+        <p>Handcrafted services executed with international dermato-cosmetic formulations.</p>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="category-filter-row" role="tablist" aria-label="Salon Service Categories">
+        <button class="filter-tab active" role="tab" aria-selected="true" onclick="filterServices('all', this)">
+          <i data-lucide="layout-grid" size="15" aria-hidden="true"></i> All Services
+        </button>
+        <button class="filter-tab" role="tab" aria-selected="false" onclick="filterServices('bridal', this)">
+          <i data-lucide="crown" size="15" aria-hidden="true"></i> Bridal &amp; Couture
+        </button>
+        <button class="filter-tab" role="tab" aria-selected="false" onclick="filterServices('hair', this)">
+          <i data-lucide="scissors" size="15" aria-hidden="true"></i> Hair Science &amp; Botox
+        </button>
+        <button class="filter-tab" role="tab" aria-selected="false" onclick="filterServices('skin', this)">
+          <i data-lucide="sparkle" size="15" aria-hidden="true"></i> Clinical Facials
+        </button>
+        <button class="filter-tab" role="tab" aria-selected="false" onclick="filterServices('nails', this)">
+          <i data-lucide="hand" size="15" aria-hidden="true"></i> Nails &amp; Extensions
+        </button>
+      </div>
+
+      <!-- 6 Categorized Photo-Rich Service Cards -->
+      <div class="cards-grid" id="serviceCardsContainer">
+        
+        <!-- Card 1 -->
+        <article class="menu-card" data-category="bridal">
+          <div class="card-photo-hero">
+            <img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?auto=format&fit=crop&w=800&q=80" onerror="this.src='https://placehold.co/800x500/FFE4E6/4A1224?text=Bridal+HD+Couture'" alt="Bridal Couture HD" loading="lazy">
+            <span class="card-badge-pill">Signature Bridal</span>
+          </div>
+          <div class="card-body">
+            <div class="highlight-pill-row">
+              <span class="mini-pill">18-Hr Waterproof</span>
+              <span class="mini-pill">MAC &amp; Huda Palette</span>
+            </div>
+            <h4 class="font-serif">Bridal HD &amp; Airbrush Couture</h4>
+            <p>Flawless sweat-proof Bengali and Reception bridal styling with luxury saree pleating, jewelry setting, and 3D floral hair updos.</p>
+          </div>
+          <div class="card-footer">
+            <div class="price-block">
+              <strong>₹8,499</strong>
+              <span>Starting Rate</span>
+            </div>
+            <button onclick="prefillBooking('Bridal HD & Airbrush Couture', 'salon')" class="btn btn-outline" style="min-height: 38px; padding: 7px 16px; font-size: 0.8rem;">
+              Book Slot
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="menu-card" data-category="hair">
+          <div class="card-photo-hero">
+            <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=800&q=80" onerror="this.src='https://placehold.co/800x500/FFE4E6/4A1224?text=Botoplex+Therapy'" alt="Botoplex Hair Treatment" loading="lazy">
+            <span class="card-badge-pill">Hair Revival</span>
+          </div>
+          <div class="card-body">
+            <div class="highlight-pill-row">
+              <span class="mini-pill">Formaldehyde Free</span>
+              <span class="mini-pill">Mirror Gloss Finish</span>
+            </div>
+            <h4 class="font-serif">Botoplex &amp; Nanoplastia Therapy</h4>
+            <p>Deep-conditioning fiber reconstruction removing 100% frizz, sealing split cuticles, and restoring luminous mirror-like hair shine.</p>
+          </div>
+          <div class="card-footer">
+            <div class="price-block">
+              <strong>₹3,999</strong>
+              <span>Length Dependent</span>
+            </div>
+            <button onclick="prefillBooking('Botoplex & Nanoplastia Therapy', 'salon')" class="btn btn-outline" style="min-height: 38px; padding: 7px 16px; font-size: 0.8rem;">
+              Book Slot
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="menu-card" data-category="skin">
+          <div class="card-photo-hero">
+            <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80" onerror="this.src='https://placehold.co/800x500/FFE4E6/4A1224?text=Clinical+Hydra-Peel'" alt="Clinical Hydra-Facial" loading="lazy">
+            <span class="card-badge-pill">Skin Ritual</span>
+          </div>
+          <div class="card-body">
+            <div class="highlight-pill-row">
+              <span class="mini-pill">Pore Vacuum Extraction</span>
+              <span class="mini-pill">Hyaluronic Infusion</span>
+            </div>
+            <h4 class="font-serif">Clinical Hydra-Peel Radiance</h4>
+            <p>Medical-grade hydra-dermabrasion extracting deep debris while infusing brightening peptides and antioxidant serums.</p>
+          </div>
+          <div class="card-footer">
+            <div class="price-block">
+              <strong>₹2,499</strong>
+              <span>Per Session</span>
+            </div>
+            <button onclick="prefillBooking('Clinical Hydra-Peel Radiance', 'salon')" class="btn btn-outline" style="min-height: 38px; padding: 7px 16px; font-size: 0.8rem;">
+              Book Slot
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 4 -->
+        <article class="menu-card" data-category="nails">
+          <div class="card-photo-hero">
+            <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=800&q=80" onerror="this.src='https://placehold.co/800x500/FFE4E6/4A1224?text=Sculpted+Gel+Nails'" alt="Gel Nail Extensions" loading="lazy">
+            <span class="card-badge-pill">Nail Studio</span>
+          </div>
+          <div class="card-body">
+            <div class="highlight-pill-row">
+              <span class="mini-pill">UV Builder Gel</span>
+              <span class="mini-pill">3D Chrome &amp; Ombre</span>
+            </div>
+            <h4 class="font-serif">Sculpted Gel Extensions &amp; Art</h4>
+            <p>Durable acrylic and builder gel tip extensions with custom bridal embellishments, chrome powders, and high-gloss sealing.</p>
+          </div>
+          <div class="card-footer">
+            <div class="price-block">
+              <strong>₹1,499</strong>
+              <span>Full Set</span>
+            </div>
+            <button onclick="prefillBooking('Sculpted Gel Extensions & Art', 'salon')" class="btn btn-outline" style="min-height: 38px; padding: 7px 16px; font-size: 0.8rem;">
+              Book Slot
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 5 -->
+        <article class="menu-card" data-category="hair">
+          <div class="card-photo-hero">
+            <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80" onerror="this.src='https://placehold.co/800x500/FFE4E6/4A1224?text=Balayage+Highlights'" alt="Balayage Hair Color" loading="lazy">
+            <span class="card-badge-pill">Color Studio</span>
+          </div>
+          <div class="card-body">
+            <div class="highlight-pill-row">
+              <span class="mini-pill">L'Oreal &amp; Schwarzkopf</span>
+              <span class="mini-pill">Bond Multiplier</span>
+            </div>
+            <h4 class="font-serif">Balayage &amp; Couture Highlights</h4>
+            <p>Hand-painted sun-kissed dimension customized to skin undertones with Plex bond protection to maintain silky hair strength.</p>
+          </div>
+          <div class="card-footer">
+            <div class="price-block">
+              <strong>₹4,499</strong>
+              <span>Starting Basis</span>
+            </div>
+            <button onclick="prefillBooking('Balayage & Couture Highlights', 'salon')" class="btn btn-outline" style="min-height: 38px; padding: 7px 16px; font-size: 0.8rem;">
+              Book Slot
+            </button>
+          </div>
+        </article>
+
+        <!-- Card 6 -->
+        <article class="menu-card" data-category="bridal">
+          <div class="card-photo-hero">
+            <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=800&q=80" onerror="this.src='https://placehold.co/800x500/FFE4E6/4A1224?text=Reception+Glow'" alt="Reception Glam" loading="lazy">
+            <span class="card-badge-pill">Evening Glam</span>
+          </div>
+          <div class="card-body">
+            <div class="highlight-pill-row">
+              <span class="mini-pill">Smokey Eye Specialist</span>
+              <span class="mini-pill">Saree Draping</span>
+            </div>
+            <h4 class="font-serif">Reception &amp; Party Glow</h4>
+            <p>Camera-ready soft glam with premium lash extension styling, precise contour sculpting, and long-wear hydrating setting.</p>
+          </div>
+          <div class="card-footer">
+            <div class="price-block">
+              <strong>₹3,499</strong>
+              <span>Per Look</span>
+            </div>
+            <button onclick="prefillBooking('Reception & Party Glow', 'salon')" class="btn btn-outline" style="min-height: 38px; padding: 7px 16px; font-size: 0.8rem;">
+              Book Slot
+            </button>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Before & After Transformation Showcase -->
+  <section class="section-wrap" id="transformations" style="background: rgba(255, 255, 255, 0.65); border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);">
+    <div class="container">
+      <div class="sec-head">
+        <span>Artistry in Action</span>
+        <h3 class="font-serif">Real Bridal Makeover Transformation</h3>
+        <p>Drag the center slider with finger or mouse to inspect our waterproof HD finish, natural skin radiance, and subtle contouring.</p>
+      </div>
+
+      <div class="transformation-container">
+        <!-- Interactive Split Slider Component with Pointer/Touch Support -->
+        <div class="split-image-viewer" id="splitViewer" aria-label="Before and After transformation slider comparison">
+          <!-- Layer Before -->
+          <div class="split-layer layer-before">
+            <span style="background: rgba(255,255,255,0.9); padding: 5px 14px; border-radius: 999px; font-size: 0.75rem; color: #4A1224; width: max-content; font-weight: 700;">
+              Natural Baseline Skin
+            </span>
+          </div>
+
+          <!-- Layer After (Adjusted by Slider) -->
+          <div class="split-layer layer-after" id="afterLayer">
+            <span style="background: var(--brand-burgundy); color: #FFFFFF; padding: 5px 14px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; width: max-content;">
+              Aurelia Bridal HD Glam
+            </span>
+          </div>
+
+          <!-- Slider Range Input Control -->
+          <input type="range" min="0" max="100" value="50" class="split-slider" id="imageSlider" aria-label="Slide to compare before and after looks" oninput="handleSlider(this.value)">
+
+          <div class="slider-handle-visual" id="sliderHandle" aria-hidden="true">
+            <i data-lucide="move-horizontal" size="18"></i>
+          </div>
+        </div>
+
+        <!-- Transformation Breakdown -->
+        <div>
+          <span style="color: var(--brand-coral); font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em;">
+            Couture Craftsmanship
+          </span>
+          <h4 class="font-serif" style="font-size: clamp(1.8rem, 3.5vw, 2.3rem); margin: 8px 0 14px; color: var(--brand-burgundy); line-height: 1.15;">
+            Flawless 18-Hour Durability
+          </h4>
+          <p style="color: var(--text-muted); font-size: 0.94rem; line-height: 1.7; margin-bottom: 22px;">
+            Every bride deserves radiant confidence. Our certified senior artists apply international HD formulations designed specifically for Bengal’s climate—guaranteeing complete sweat-proof resilience from the morning Sindoor Daan to the midnight reception.
+          </p>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px;">
+            <div style="background: #FFF1F2; padding: 14px; border-radius: 12px; border: 1px solid rgba(225, 29, 72, 0.12);">
+              <strong style="color: var(--brand-burgundy); font-size: 1.15rem; display: block;">100%</strong>
+              <span style="font-size: 0.75rem; color: var(--text-muted);">Tear &amp; Sweat-Proof Guarantee</span>
+            </div>
+            <div style="background: #FFFBEB; padding: 14px; border-radius: 12px; border: 1px solid rgba(217, 119, 6, 0.15);">
+              <strong style="color: #B45309; font-size: 1.15rem; display: block;">No Flashback</strong>
+              <span style="font-size: 0.75rem; color: var(--text-muted);">Studio Camera Calibrated Finish</span>
+            </div>
+          </div>
+
+          <a href="#booking" class="btn btn-gold" onclick="prefillBooking('Bridal HD & Airbrush Couture', 'salon')">
+            Book Bridal Consultation
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Academy Advantage & Professional Courses Section -->
+  <section class="section-wrap" id="academy">
+    <div class="container">
+      <div class="sec-head">
+        <span>Launch Your Career</span>
+        <h3 class="font-serif">The Aurelia Academy Advantage</h3>
+        <p>Become a financially independent professional beauty artist or salon entrepreneur with our hands-on training methodology.</p>
+      </div>
+
+      <!-- 4 Advantage Pillars -->
+      <div class="advantage-grid">
+        <div class="advantage-box">
+          <div class="advantage-icon">
+            <i data-lucide="users" size="24" aria-hidden="true"></i>
+          </div>
+          <h5>Real Model Practice</h5>
+          <p>Train directly on human models under faculty supervision instead of plastic mannequins.</p>
+        </div>
+
+        <div class="advantage-box">
+          <div class="advantage-icon">
+            <i data-lucide="briefcase" size="24" aria-hidden="true"></i>
+          </div>
+          <h5>Vanity Kit Included</h5>
+          <p>Receive an essential starter professional kit with brushes, palettes, and hot tools to begin taking freelance bookings.</p>
+        </div>
+
+        <div class="advantage-box">
+          <div class="advantage-icon">
+            <i data-lucide="shield-check" size="24" aria-hidden="true"></i>
+          </div>
+          <h5>Valid Certification</h5>
+          <p>Graduate with recognized course credentials to apply at top salons or launch your own studio.</p>
+        </div>
+
+        <div class="advantage-box">
+          <div class="advantage-icon">
+            <i data-lucide="trending-up" size="24" aria-hidden="true"></i>
+          </div>
+          <h5>Business &amp; Client Mastery</h5>
+          <p>Learn Instagram client reels, portfolio photography, and pricing strategies to start earning immediately.</p>
+        </div>
+      </div>
+
+      <!-- 3 Certified Academy Diploma Cards -->
+      <div class="cards-grid">
+        <!-- Academy Card 1 -->
+        <div class="service-card">
+          <div>
+            <span class="card-badge">Diploma Course</span>
+            <h4 class="font-serif">Master Diploma in Bridal Makeup &amp; Hair</h4>
+            <p>From foundational color correction to intricate Bengali, Muslim, and Reception bridal looks. Includes complete vanity setup.</p>
+            <div class="academy-perks">
+              <span class="academy-tag">3 Months Duration</span>
+              <span class="academy-tag">Govt / ISO Certified</span>
+              <span class="academy-tag">Free Vanity Kit</span>
+            </div>
+            <ul class="service-features">
+              <li><i data-lucide="check" size="14" style="color: #7E22CE;" aria-hidden="true"></i> 20+ Real Model Practice Sessions</li>
+              <li><i data-lucide="check" size="14" style="color: #7E22CE;" aria-hidden="true"></i> HD, Airbrush &amp; Waterproof Techniques</li>
+              <li><i data-lucide="check" size="14" style="color: #7E22CE;" aria-hidden="true"></i> Client Handling &amp; Business Guidance</li>
+            </ul>
+          </div>
+          <div class="card-foot">
+            <button onclick="openSyllabusModal('bridal')" class="btn btn-outline" style="padding: 7px 14px; font-size: 0.8rem;">
+              View Syllabus
+            </button>
+            <button onclick="prefillBooking('Master Diploma in Bridal Makeup', 'academy')" class="btn btn-gold" style="padding: 8px 16px; font-size: 0.82rem;">
+              Enroll Now
+            </button>
+          </div>
+        </div>
+
+        <!-- Academy Card 2 -->
+        <div class="service-card">
+          <div>
+            <span class="card-badge">Professional Certificate</span>
+            <h4 class="font-serif">Advanced Hair Chemical &amp; Styling Science</h4>
+            <p>Master Rebonding, Smoothening, Keratin, Botoplex, Balayage color formulation, and modern bridal hair structuring.</p>
+            <div class="academy-perks">
+              <span class="academy-tag">2 Months Duration</span>
+              <span class="academy-tag">Hands-on Practicals</span>
+              <span class="academy-tag">Certificate Included</span>
+            </div>
+            <ul class="service-features">
+              <li><i data-lucide="check" size="14" style="color: #7E22CE;" aria-hidden="true"></i> Chemical Mixology &amp; Scalp Safety</li>
+              <li><i data-lucide="check" size="14" style="color: #7E22CE;" aria-hidden="true"></i> Hot Tool Mastery &amp; Extensions Setting</li>
+              <li><i data-lucide="check" size="14" style="color: #7E22CE;" aria-hidden="true"></i> Salon Employment Assistance</li>
+            </ul>
+          </div>
+          <div class="card-foot">
+            <button onclick="openSyllabusModal('hair')" class="btn btn-outline" style="padding: 7px 14px; font-size: 0.8rem;">
+              View Syllabus
+            </button>
+            <button onclick="prefillBooking('Advanced Hair Chemical & Styling', 'academy')" class="btn btn-gold" style="padding: 8px 16px; font-size: 0.82rem;">
+              Enroll Now
+            </button>
+          </div>
+        </div>
+
+        <!-- Academy Card 3 -->
+        <div class="service-card">
+          <div>
+            <span class="card-badge">Boutique Certification</span>
+            <h4 class="font-serif">Professional Nail Artistry &amp; Extension</h4>
+            <p>Gel extensions, acrylic structuring, ombré glitter encapsulation, 3D chrome art, and salon safety hygiene.</p>
+            <div class="academy-perks">
+              <span class="academy-tag">4 Weeks Fast-Track</span>
+              <span class="academy-tag">Starter LED Lamp Kit</span>
+              <span class="academy-tag">High-Demand Skill</span>
+            </div>
+            <ul class="service-features">
+              <li><i data-lucide="check" size="14" style="color: #7E22CE;" aria-hidden="true"></i> Gel &amp; Acrylic Nail Extensions</li>
+              <li><i data-lucide="check" size="14" style="color: #7E22CE;" aria-hidden="true"></i> Modern Nail Art &amp; Chrome Buffing</li>
+              <li><i data-lucide="check" size="14" style="color: #7E22CE;" aria-hidden="true"></i> Safe Refill &amp; Acetone Removal</li>
+            </ul>
+          </div>
+          <div class="card-foot">
+            <button onclick="openSyllabusModal('nail')" class="btn btn-outline" style="padding: 7px 14px; font-size: 0.8rem;">
+              View Syllabus
+            </button>
+            <button onclick="prefillBooking('Professional Nail Artistry', 'academy')" class="btn btn-gold" style="padding: 8px 16px; font-size: 0.82rem;">
+              Enroll Now
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Booking & Course Admission Hub -->
+  <section class="section-wrap" id="booking">
+    <div class="container">
+      <div class="booking-wrapper">
+        <!-- Sidebar Information -->
+        <div class="booking-sidebar">
+          <div>
+            <span style="color: var(--brand-coral); font-size: 0.78rem; text-transform: uppercase; font-weight: 700; letter-spacing: 0.12em;">
+              Priority Reservation
+            </span>
+            <h4 class="font-serif" style="font-size: clamp(1.8rem, 3.5vw, 2.2rem); color: var(--brand-burgundy); margin: 10px 0 14px; line-height: 1.15;">
+              Your Beauty Journey Begins Here
+            </h4>
+            <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.7; margin-bottom: 26px;">
+              Whether booking a pampering hair session, securing your wedding makeover date, or enrolling in our next academy batch, our coordinators assist you promptly.
+            </p>
+
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+              <div style="display: flex; gap: 12px; align-items: flex-start;">
+                <i data-lucide="map-pin" size="18" style="color: var(--brand-coral); flex-shrink: 0; margin-top: 2px;" aria-hidden="true"></i>
+                <span style="font-size: 0.88rem; color: var(--text-main);">24 Park Avenue, Alipore Enclave, Kolkata 700027</span>
+              </div>
+              <div style="display: flex; gap: 12px; align-items: center;">
+                <i data-lucide="phone" size="18" style="color: var(--brand-coral); flex-shrink: 0;" aria-hidden="true"></i>
+                <span style="font-size: 0.88rem; color: var(--text-main); font-weight: 600;">+91 90000 00000 (Demo Concierge Desk)</span>
+              </div>
+              <div style="display: flex; gap: 12px; align-items: flex-start;">
+                <i data-lucide="clock" size="18" style="color: var(--brand-coral); flex-shrink: 0; margin-top: 2px;" aria-hidden="true"></i>
+                <span style="font-size: 0.88rem; color: var(--text-main);">Mon-Wed, Fri-Sun: 10:30 AM – 8:00 PM (Thu Closed)</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border-subtle);">
+            <small style="color: var(--text-dim); display: block; font-size: 0.75rem; margin-bottom: 8px;">Interactive Demo Concierge</small>
+            <button type="button" onclick="openSyllabusModal('bridal')" class="btn btn-outline" style="width: 100%;">
+              <i data-lucide="book-open" size="16" aria-hidden="true"></i>
+              Preview Sample Course Brochure
+            </button>
+          </div>
+        </div>
+
+        <!-- Tabbed Form Panel -->
+        <div class="booking-form-area">
+          <div class="form-tabs" role="tablist" aria-label="Booking Type Selector">
+            <button class="form-tab-btn active" id="formTabSalon" role="tab" aria-selected="true" onclick="setBookingTab('salon')">
+              Salon Appointment
+            </button>
+            <button class="form-tab-btn" id="formTabAcademy" role="tab" aria-selected="false" onclick="setBookingTab('academy')">
+              Academy Admission
+            </button>
+          </div>
+
+          <form id="unifiedBookingForm" onsubmit="handleBookingSubmit(event)">
+            <input type="hidden" id="bookingCategory" value="salon">
+
+            <div class="form-row">
+              <div>
+                <label for="custName">Full Name *</label>
+                <input type="text" id="custName" required placeholder="e.g. Ananya Sen (Demo)" autocomplete="name">
+              </div>
+              <div>
+                <label for="custPhone">Contact Number *</label>
+                <input type="tel" id="custPhone" required placeholder="e.g. +91 90000 00000" autocomplete="tel">
+              </div>
+            </div>
+
+            <div class="input-field">
+              <label for="selectedProgram" id="interestLabel">Selected Service / Treatment *</label>
+              <select id="selectedProgram" required>
+                <!-- Dynamically populated based on active tab -->
+              </select>
+            </div>
+
+            <div class="form-row">
+              <div>
+                <label for="bookingDate">Preferred Date</label>
+                <input type="date" id="bookingDate">
+              </div>
+              <div>
+                <label for="bookingSlot">Preferred Time Slot</label>
+                <select id="bookingSlot">
+                  <option value="Morning (11:00 AM - 1:00 PM)">Morning (11:00 AM - 1:00 PM)</option>
+                  <option value="Afternoon (2:00 PM - 5:00 PM)">Afternoon (2:00 PM - 5:00 PM)</option>
+                  <option value="Evening (5:30 PM - 8:00 PM)">Evening (5:30 PM - 8:00 PM)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="input-field">
+              <label for="custNotes">Special Notes or Skin/Hair Type Details</label>
+              <textarea rows="3" id="custNotes" placeholder="Mention if you require bridal trial, wedding date, or custom batch timing..."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-gold" style="width: 100%; border-radius: 10px;">
+              <i data-lucide="calendar-check" size="16" aria-hidden="true"></i>
+              Confirm &amp; Generate Booking Token
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Location & Map Hub -->
+  <section class="section-wrap" id="location">
+    <div class="container">
+      <div class="sec-head">
+        <span>Visit the Studio</span>
+        <h3 class="font-serif">Metropolitan Flagship Location</h3>
+        <p>Demo showcase address situated in South Kolkata’s premier boulevard.</p>
+      </div>
+
+      <div class="location-box">
+        <div class="loc-top">
+          <div>
+            <h4 class="font-serif" style="font-size: 1.35rem; color: var(--brand-burgundy); margin-bottom: 4px;">Aurelia Luxe Bridal Salon &amp; Academy</h4>
+            <p style="font-size: 0.88rem; color: var(--text-muted);">
+              24 Park Avenue, Alipore Enclave, Kolkata, West Bengal 700027 (Demo Location)
+            </p>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="https://maps.google.com/?q=Alipore,Kolkata" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="font-size: 0.82rem;">
+              <i data-lucide="navigation" size="14" aria-hidden="true"></i>
+              Open Demo Map
+            </a>
+            <a href="#booking" class="btn btn-gold" style="font-size: 0.82rem;" onclick="setBookingTab('salon')">
+              <i data-lucide="calendar-check" size="14" aria-hidden="true"></i>
+              Book Demo Visit
+            </a>
+          </div>
+        </div>
+
+        <div class="map-frame-holder">
+          <iframe 
+            src="https://maps.google.com/maps?q=Alipore,%20Kolkata,%20West%20Bengal&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+            title="Aurelia Luxe Demo Location Map" 
+            loading="lazy">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="brand-wrap">
+          <div class="brand-crest" style="width: 36px; height: 36px; font-size: 1.2rem;">A</div>
+          <div>
+            <strong style="color: var(--brand-burgundy); font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; display: block;">AURELIA LUXE</strong>
+            <span style="font-size: 0.72rem; color: var(--brand-rose); text-transform: uppercase;">Bridal Couture Salon &amp; Academy</span>
+          </div>
+        </div>
+
+        <p>&copy; 2026 Aurelia Luxe Salon &amp; Academy (Interactive Demo Template).</p>
+        <p>Crafted &amp; Powered by <a href="https://webjackers.in" target="_blank" rel="noopener noreferrer" style="color: var(--brand-coral); font-weight: 700;">Webjackers</a> (webjackers.in)</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Live Concierge CTA (Replaces External WhatsApp Redirect) -->
+  <button type="button" onclick="scrollToDemoConcierge()" class="concierge-badge" aria-label="Book Demo Slot">
+    <i data-lucide="sparkles" size="20" aria-hidden="true"></i>
+    <span>Book Demo Slot</span>
+  </button>
+
+  <!-- Course Syllabus Modal -->
+  <div class="modal-overlay" id="syllabusModal" role="dialog" aria-modal="true" aria-labelledby="modalCourseTitle" onclick="if(event.target===this) closeSyllabusModal()">
+    <div class="modal-box">
+      <button class="close-btn" onclick="closeSyllabusModal()" aria-label="Close Course Syllabus Dialog">
+        <i data-lucide="x" size="20" aria-hidden="true"></i>
+      </button>
+      <span style="color: var(--brand-coral); font-size: 0.78rem; text-transform: uppercase; font-weight: 700;">Curriculum Specification</span>
+      <h4 class="font-serif" id="modalCourseTitle" style="font-size: 1.8rem; color: var(--brand-burgundy); margin: 8px 0 14px; line-height: 1.2;">
+        Master Diploma in Bridal Makeup
+      </h4>
+      <p id="modalCourseDesc" style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;">
+        Detailed week-by-week module breakdown.
+      </p>
+
+      <div class="syllabus-timeline" id="modalTimeline" style="margin-top: 18px;">
+        <!-- Injected via JS -->
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--border-subtle); flex-wrap: wrap; gap: 12px;">
+        <div>
+          <span style="font-size: 0.75rem; color: var(--text-dim); display: block;">Enrollment Status</span>
+          <strong style="color: var(--brand-coral); font-size: 0.9rem;">Batch Seats Available</strong>
+        </div>
+        <button onclick="enrollFromModal()" class="btn btn-gold">
+          Enroll in this Course
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Confirmation Modal -->
+  <div class="modal-overlay" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmModalTitle" onclick="if(event.target===this) closeConfirmModal()">
+    <div class="modal-box" style="text-align: center; max-width: 440px;">
+      <button class="close-btn" onclick="closeConfirmModal()" aria-label="Close Confirmation Dialog">
+        <i data-lucide="x" size="20" aria-hidden="true"></i>
+      </button>
+      <div style="width: 58px; height: 58px; border-radius: 50%; background: #FFE4E6; color: var(--brand-coral); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+        <i data-lucide="check" size="30" aria-hidden="true"></i>
+      </div>
+      <h4 class="font-serif" id="confirmModalTitle" style="font-size: 1.75rem; color: var(--brand-burgundy); margin-bottom: 8px;">Demo Reservation Logged</h4>
+      <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 20px; line-height: 1.6;">
+        Thank you, <strong id="resName" style="color: var(--brand-burgundy);"></strong>. Your simulated priority token for <strong id="resService" style="color: var(--brand-coral);"></strong> has been generated in this interactive demo.
+      </p>
+      <button onclick="closeConfirmModal()" class="btn btn-gold" style="width: 100%;">
+        Done
+      </button>
+    </div>
+  </div>
+
+  <!-- Interactive JavaScript Engine -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    /* ==========================================================
+       0. DEMO CONCIERGE SCROLL HELPER
+       ========================================================== */
+    function scrollToDemoConcierge() {
+      const bookingSec = document.getElementById('booking');
+      if (bookingSec) {
+        bookingSec.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    /* ==========================================================
+       1. MOBILE DRAWER NAVIGATION HANDLERS
+       ========================================================== */
+    function toggleMobileDrawer(open) {
+      const drawer = document.getElementById('mobileDrawer');
+      const overlay = document.getElementById('drawerOverlay');
+      if (open) {
+        drawer.classList.add('active');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      } else {
+        drawer.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    /* ==========================================================
+       2. LAKMÉ STANDARD ARTISTRY CATEGORY FILTER
+       ========================================================== */
+    function filterServices(cat, btn) {
+      document.querySelectorAll('.filter-tab').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      if (btn) {
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+      }
+
+      const cards = document.querySelectorAll('#serviceCardsContainer .menu-card');
+      cards.forEach(card => {
+        if (cat === 'all' || card.dataset.category === cat) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    /* ==========================================================
+       3. 3D LUMINESCENT PRISM & DIAMOND HALO KINETIC CANVAS
+          (Auto-Scales to Device Pixel Ratio & Touch Resilient)
+       ========================================================== */
+    const canvas = document.getElementById('prismCanvas');
+    const ctx = canvas.getContext('2d');
+    const rootEl = document.documentElement;
+
+    let width = 440;
+    let height = 440;
+    let centerX = 220;
+    let centerY = 220;
+
+    function resizeCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = rect.width || 320;
+      height = rect.height || 320;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      if (ctx.resetTransform) ctx.resetTransform();
+      ctx.scale(dpr, dpr);
+      centerX = width / 2;
+      centerY = height / 2;
+    }
+
+    window.addEventListener('resize', resizeCanvas, { passive: true });
+    resizeCanvas();
+
+    let rotX = 0.25;
+    let rotY = 0.35;
+    let targetRotX = 0.25;
+    let targetRotY = 0.35;
+    let isDragging = false;
+    let lastMouseX = 0;
+    let lastMouseY = 0;
+
+    let prismPalette = {
+      primary: 'rgba(244, 63, 94, 0.45)',
+      secondary: 'rgba(217, 119, 6, 0.45)',
+      tertiary: 'rgba(168, 85, 247, 0.4)',
+      edge: 'rgba(255, 255, 255, 0.85)',
+      particle: '#F43F5E',
+      glow: '#FFE4E6'
+    };
+
+    const baseVertices = [
+      { x: 0, y: -130, z: 0 },
+      { x: 0, y: 130, z: 0 },
+      { x: 90, y: -24, z: 0 },
+      { x: 64, y: -24, z: 64 },
+      { x: 0, y: -24, z: 90 },
+      { x: -64, y: -24, z: 64 },
+      { x: -90, y: -24, z: 0 },
+      { x: -64, y: -24, z: -64 },
+      { x: 0, y: -24, z: -90 },
+      { x: 64, y: -24, z: -64 },
+      { x: 50, y: 32, z: 0 },
+      { x: 0, y: 32, z: 50 },
+      { x: -50, y: 32, z: 0 },
+      { x: 0, y: 32, z: -50 }
+    ];
+
+    const particles = [];
+    const PARTICLE_COUNT = 38;
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      particles.push({
+        x: (Math.random() - 0.5) * 320,
+        y: (Math.random() - 0.5) * 320,
+        z: (Math.random() - 0.5) * 320,
+        size: Math.random() * 2.5 + 1,
+        speed: Math.random() * 0.02 + 0.008,
+        angle: Math.random() * Math.PI * 2,
+        radius: Math.random() * 150 + 45
+      });
+    }
+
+    function rotate3D(point, rx, ry) {
+      let cosY = Math.cos(ry);
+      let sinY = Math.sin(ry);
+      let x1 = point.x * cosY + point.z * sinY;
+      let z1 = -point.x * sinY + point.z * cosY;
+
+      let cosX = Math.cos(rx);
+      let sinX = Math.sin(rx);
+      let y2 = point.y * cosX - z1 * sinX;
+      let z2 = point.y * sinX + z1 * cosX;
+
+      let perspective = 500;
+      let scale = (perspective / (perspective + z2)) * (Math.min(width, height) / 440);
+      return {
+        x: centerX + x1 * scale,
+        y: centerY + y2 * scale,
+        scale: scale,
+        z: z2
+      };
+    }
+
+    function renderPrism(time) {
+      ctx.clearRect(0, 0, width, height);
+
+      rotX += (targetRotX - rotX) * 0.06;
+      rotY += (targetRotY - rotY) * 0.06;
+
+      if (!isDragging) {
+        targetRotY += 0.005;
+        targetRotX = Math.sin(time * 0.001) * 0.16 + 0.08;
+      }
+
+      particles.forEach(p => {
+        p.angle += p.speed;
+        let px = Math.cos(p.angle) * p.radius;
+        let pz = Math.sin(p.angle) * p.radius;
+        let py = p.y + Math.sin(time * 0.002 + p.angle) * 12;
+        let proj = rotate3D({ x: px, y: py, z: pz }, rotX, rotY);
+
+        ctx.beginPath();
+        ctx.arc(proj.x, proj.y, p.size * proj.scale, 0, Math.PI * 2);
+        ctx.fillStyle = prismPalette.particle;
+        ctx.shadowColor = prismPalette.particle;
+        ctx.shadowBlur = 8;
+        ctx.globalAlpha = Math.min(1, Math.max(0.2, (proj.scale - 0.5) * 1.6));
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      });
+
+      let projected = baseVertices.map(v => rotate3D(v, rotX, rotY));
+
+      ctx.lineWidth = 1.1;
+      for (let r = 0; r < 2; r++) {
+        let ringRadius = 135 + r * 25;
+        ctx.beginPath();
+        for (let a = 0; a <= Math.PI * 2; a += 0.16) {
+          let rx = Math.cos(a) * ringRadius;
+          let rz = Math.sin(a) * ringRadius;
+          let ry = Math.sin(a * 2 + time * 0.002) * 10;
+          let p = rotate3D({ x: rx, y: ry, z: rz }, rotX, rotY);
+          if (a === 0) ctx.moveTo(p.x, p.y);
+          else ctx.lineTo(p.x, p.y);
+        }
+        ctx.closePath();
+        ctx.strokeStyle = r === 0 ? 'rgba(217, 119, 6, 0.35)' : 'rgba(244, 63, 94, 0.22)';
+        ctx.stroke();
+      }
+
+      const facets = [
+        [0, 2, 3], [0, 3, 4], [0, 4, 5], [0, 5, 6],
+        [0, 6, 7], [0, 7, 8], [0, 8, 9], [0, 9, 2],
+        [2, 3, 10], [3, 4, 11], [4, 5, 11], [5, 6, 12],
+        [6, 7, 12], [7, 8, 13], [8, 9, 13], [9, 2, 10],
+        [1, 10, 11], [1, 11, 12], [1, 12, 13], [1, 13, 10]
+      ];
+
+      let sortedFacets = facets.map(f => {
+        let avgZ = (projected[f[0]].z + projected[f[1]].z + projected[f[2]].z) / 3;
+        return { indices: f, z: avgZ };
+      }).sort((a, b) => b.z - a.z);
+
+      sortedFacets.forEach((f, idx) => {
+        let p1 = projected[f.indices[0]];
+        let p2 = projected[f.indices[1]];
+        let p3 = projected[f.indices[2]];
+
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.lineTo(p3.x, p3.y);
+        ctx.closePath();
+
+        let grad = ctx.createLinearGradient(p1.x, p1.y, p3.x, p3.y);
+        if (idx % 3 === 0) {
+          grad.addColorStop(0, prismPalette.primary);
+          grad.addColorStop(1, 'rgba(255, 255, 255, 0.35)');
+        } else if (idx % 3 === 1) {
+          grad.addColorStop(0, prismPalette.secondary);
+          grad.addColorStop(1, 'rgba(255, 255, 255, 0.2)');
+        } else {
+          grad.addColorStop(0, prismPalette.tertiary);
+          grad.addColorStop(1, 'rgba(254, 243, 199, 0.3)');
+        }
+
+        ctx.fillStyle = grad;
+        ctx.globalAlpha = 0.72;
+        ctx.fill();
+
+        ctx.strokeStyle = prismPalette.edge;
+        ctx.lineWidth = 1.1;
+        ctx.stroke();
+      });
+
+      let centerProj = rotate3D({ x: 0, y: -20, z: 0 }, rotX, rotY);
+      let glowRadius = 65 * (Math.min(width, height) / 440);
+      let coreGlow = ctx.createRadialGradient(centerProj.x, centerProj.y, 4, centerProj.x, centerProj.y, glowRadius);
+      coreGlow.addColorStop(0, '#FFFFFF');
+      coreGlow.addColorStop(0.3, prismPalette.glow);
+      coreGlow.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
+      ctx.beginPath();
+      ctx.arc(centerProj.x, centerProj.y, glowRadius, 0, Math.PI * 2);
+      ctx.fillStyle = coreGlow;
+      ctx.globalAlpha = 0.55;
+      ctx.fill();
+
+      ctx.globalAlpha = 1;
+      requestAnimationFrame(renderPrism);
+    }
+    requestAnimationFrame(renderPrism);
+
+    // Pointer Events for Mouse & Touch on Canvas (Scroll-safe on vertical swipes)
+    canvas.addEventListener('pointerdown', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const dxCenter = e.clientX - (rect.left + rect.width / 2);
+      const dyCenter = e.clientY - (rect.top + rect.height / 2);
+      const dist = Math.hypot(dxCenter, dyCenter);
+      // Only capture drag inside the central crystal radius so outer edge touches scroll the page naturally
+      if (dist <= rect.width * 0.42) {
+        isDragging = true;
+        lastMouseX = e.clientX;
+        lastMouseY = e.clientY;
+        if (canvas.setPointerCapture) canvas.setPointerCapture(e.pointerId);
+      }
+    });
+
+    window.addEventListener('pointerup', () => { isDragging = false; });
+    window.addEventListener('pointercancel', () => { isDragging = false; });
+
+    window.addEventListener('pointermove', (e) => {
+      if (isDragging) {
+        let dx = e.clientX - lastMouseX;
+        let dy = e.clientY - lastMouseY;
+        targetRotY += dx * 0.012;
+        targetRotX += dy * 0.012;
+        lastMouseX = e.clientX;
+        lastMouseY = e.clientY;
+      }
+
+      if (e.pointerType === 'mouse') {
+        const pctX = Math.round((e.clientX / window.innerWidth) * 100);
+        const pctY = Math.round((e.clientY / window.innerHeight) * 100);
+        rootEl.style.setProperty('--mouse-x', `${pctX}%`);
+        rootEl.style.setProperty('--mouse-y', `${pctY}%`);
+      }
+    });
+
+    /* ==========================================================
+       4. GLAMOUR MODE SELECTOR & AMBIENT COLOR PALETTE
+       ========================================================== */
+    const glamThemes = {
+      bridal: {
+        aura: 'radial-gradient(circle, rgba(254, 243, 199, 0.95) 0%, rgba(255, 228, 230, 0.8) 45%, rgba(243, 232, 255, 0) 70%)',
+        primary: 'rgba(244, 63, 94, 0.5)',
+        secondary: 'rgba(217, 119, 6, 0.45)',
+        tertiary: 'rgba(168, 85, 247, 0.35)',
+        particle: '#F43F5E',
+        glow: '#FFE4E6'
+      },
+      sunset: {
+        aura: 'radial-gradient(circle, rgba(254, 215, 170, 0.95) 0%, rgba(254, 240, 138, 0.7) 45%, rgba(255, 237, 213, 0) 70%)',
+        primary: 'rgba(249, 115, 22, 0.5)',
+        secondary: 'rgba(234, 179, 8, 0.45)',
+        tertiary: 'rgba(244, 63, 94, 0.35)',
+        particle: '#D97706',
+        glow: '#FEF3C7'
+      },
+      editorial: {
+        aura: 'radial-gradient(circle, rgba(233, 213, 255, 0.95) 0%, rgba(244, 114, 182, 0.65) 45%, rgba(243, 232, 255, 0) 70%)',
+        primary: 'rgba(147, 51, 234, 0.5)',
+        secondary: 'rgba(236, 72, 153, 0.45)',
+        tertiary: 'rgba(99, 102, 241, 0.35)',
+        particle: '#9333EA',
+        glow: '#F3E8FF'
+      },
+      academy: {
+        aura: 'radial-gradient(circle, rgba(209, 250, 229, 0.95) 0%, rgba(254, 243, 199, 0.7) 45%, rgba(255, 255, 255, 0) 70%)',
+        primary: 'rgba(16, 185, 129, 0.5)',
+        secondary: 'rgba(217, 119, 6, 0.45)',
+        tertiary: 'rgba(6, 182, 212, 0.35)',
+        particle: '#059669',
+        glow: '#D1FAE5'
+      }
+    };
+
+    function setGlamMode(mode, btn) {
+      document.querySelectorAll('.glam-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+
+      const theme = glamThemes[mode];
+      const halo = document.getElementById('haloAura');
+
+      if (halo && theme) halo.style.background = theme.aura;
+      if (theme) {
+        prismPalette.primary = theme.primary;
+        prismPalette.secondary = theme.secondary;
+        prismPalette.tertiary = theme.tertiary;
+        prismPalette.particle = theme.particle;
+        prismPalette.glow = theme.glow;
+      }
+    }
+
+    /* ==========================================================
+       5. SPLIT SLIDER, SYLLABUS MODAL & UNIFIED BOOKING HUB
+       ========================================================== */
+    const courseData = {
+      bridal: {
+        title: "Master Diploma in Bridal Makeup & Hair Styling",
+        desc: "3-Month comprehensive professional certification designed to transform beginner artists into high-earning wedding stylists.",
+        timeline: [
+          { week: "Month 1: Fundamentals & Skin Preparation", detail: "Color theory, skin undertones, acne/pigmentation color correction, HD brush techniques, and hygiene protocol." },
+          { week: "Month 2: Bridal Aesthetics & Signature Looks", detail: "Traditional Bengali Bou-Bhaat, Matte Reception, Muslim Nikah glam, and international cut-crease styling." },
+          { week: "Month 3: Advanced Hair & Portfolio Shoot", detail: "Thermal hot tools, 3D textured braids, saree/lehenga draping, and professional model portfolio graduation shoot." }
+        ]
+      },
+      hair: {
+        title: "Advanced Hair Chemical & Styling Science",
+        desc: "2-Month intensive salon masterclass on chemical formulations and scalp therapy.",
+        timeline: [
+          { week: "Weeks 1-2: Hair Anatomy & Consultation", detail: "Porosity tests, pH balance, damage assessment, and shampoo backwash technique." },
+          { week: "Weeks 3-5: Chemical Transformation", detail: "Permanent smoothening, Japanese rebonding, formaldehyde-free keratin, and Botox revival." },
+          { week: "Weeks 6-8: Creative Balayage & Cut", detail: "Foil placement, ash blondes, money pieces, and modern layer feathering." }
+        ]
+      },
+      nail: {
+        title: "Professional Nail Artistry & Extensions",
+        desc: "4-Week fast-track certification for modern nail technicians.",
+        timeline: [
+          { week: "Week 1: Nail Prep & Tip Structuring", detail: "Dry cuticle manicure, buffer technique, tip sizing, and primer bonding." },
+          { week: "Week 2: Gel Extensions & UV Curing", detail: "Builder gel apex building, pinching techniques, and mirror topcoat sealing." },
+          { week: "Week 3: Acrylic Sculpting & 3D Art", detail: "Monomer polymer ratio, ombre glitter encapsulation, and chrome buffing." },
+          { week: "Week 4: Salon Safety & Removal", detail: "E-file bit mastery, safe foil removal, and client booking pricing." }
+        ]
+      }
+    };
+
+    const salonOptions = [
+      "Bridal HD & Airbrush Couture (₹8,499)",
+      "Botoplex & Nanoplastia Therapy (₹3,999)",
+      "Clinical Hydra-Peel Radiance (₹2,499)",
+      "Sculpted Gel Extensions & Art (₹1,499)",
+      "Balayage & Couture Highlights (₹4,499)",
+      "Reception & Party Glow (₹3,499)"
+    ];
+
+    const academyOptions = [
+      "Master Diploma in Bridal Makeup & Hair (3 Months)",
+      "Advanced Hair Chemical & Styling Science (2 Months)",
+      "Professional Nail Artistry & Extensions (4 Weeks)",
+      "Clinical Cosmetology & Skin Science Certificate",
+      "Self-Grooming Personal Makeup Masterclass"
+    ];
+
+    function handleSlider(val) {
+      const afterLayer = document.getElementById('afterLayer');
+      const sliderHandle = document.getElementById('sliderHandle');
+      afterLayer.style.width = val + '%';
+      sliderHandle.style.left = val + '%';
+    }
+
+    function setBookingTab(category) {
+      const formTabSalon = document.getElementById('formTabSalon');
+      const formTabAcademy = document.getElementById('formTabAcademy');
+      const interestLabel = document.getElementById('interestLabel');
+      const select = document.getElementById('selectedProgram');
+      const bookingCategory = document.getElementById('bookingCategory');
+
+      bookingCategory.value = category;
+      select.innerHTML = '';
+
+      if (category === 'salon') {
+        formTabSalon.classList.add('active');
+        formTabSalon.setAttribute('aria-selected', 'true');
+        formTabAcademy.classList.remove('active');
+        formTabAcademy.setAttribute('aria-selected', 'false');
+        interestLabel.innerText = "Select Parlour Service / Treatment *";
+        salonOptions.forEach(opt => {
+          const el = document.createElement('option');
+          el.value = opt;
+          el.innerText = opt;
+          select.appendChild(el);
+        });
+      } else {
+        formTabAcademy.classList.add('active');
+        formTabAcademy.setAttribute('aria-selected', 'true');
+        formTabSalon.classList.remove('active');
+        formTabSalon.setAttribute('aria-selected', 'false');
+        interestLabel.innerText = "Select Academy Course / Diploma *";
+        academyOptions.forEach(opt => {
+          const el = document.createElement('option');
+          el.value = opt;
+          el.innerText = opt;
+          select.appendChild(el);
+        });
+      }
+    }
+
+    function prefillBooking(serviceName, category) {
+      setBookingTab(category);
+      const select = document.getElementById('selectedProgram');
+      for (let i = 0; i < select.options.length; i++) {
+        if (select.options[i].text.toLowerCase().includes(serviceName.toLowerCase())) {
+          select.selectedIndex = i;
+          break;
+        }
+      }
+      const bookingSec = document.getElementById('booking');
+      if (bookingSec) {
+        bookingSec.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    let activeModalKey = 'bridal';
+    function openSyllabusModal(key) {
+      activeModalKey = key;
+      const data = courseData[key];
+      document.getElementById('modalCourseTitle').innerText = data.title;
+      document.getElementById('modalCourseDesc').innerText = data.desc;
+
+      const timeline = document.getElementById('modalTimeline');
+      timeline.innerHTML = '';
+      data.timeline.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'timeline-item';
+        div.innerHTML = `<h6>${item.week}</h6><p>${item.detail}</p>`;
+        timeline.appendChild(div);
+      });
+
+      document.getElementById('syllabusModal').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSyllabusModal() {
+      document.getElementById('syllabusModal').style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    function enrollFromModal() {
+      closeSyllabusModal();
+      const title = courseData[activeModalKey].title;
+      prefillBooking(title, 'academy');
+    }
+
+    function handleBookingSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('custName').value;
+      const service = document.getElementById('selectedProgram').value;
+      
+      document.getElementById('resName').innerText = name;
+      document.getElementById('resService').innerText = service;
+      document.getElementById('confirmModal').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeConfirmModal() {
+      document.getElementById('confirmModal').style.display = 'none';
+      document.getElementById('unifiedBookingForm').reset();
+      document.body.style.overflow = '';
+      setBookingTab('salon');
+    }
+
+    // Default Initialization
+    window.addEventListener('DOMContentLoaded', () => {
+      setBookingTab('salon');
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const dateInput = document.getElementById('bookingDate');
+      if (dateInput) dateInput.value = tomorrow.toISOString().split('T')[0];
+    });
+  </script>
+</body>
+</html>
