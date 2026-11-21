@@ -1843,28 +1843,9 @@
       </div>
 
       <div class="transformation-container">
-        <!-- Interactive Split Slider Component -->
-        <div class="split-image-viewer" id="splitViewer" aria-label="Before and After transformation slider comparison">
-          <!-- Layer Before -->
-          <div class="split-layer layer-before">
-            <span style="background: rgba(255,255,255,0.9); padding: 5px 14px; border-radius: 999px; font-size: 0.75rem; color: #4A1224; width: max-content; font-weight: 700;">
-              Natural Baseline Skin
-            </span>
-          </div>
-
-          <!-- Layer After -->
-          <div class="split-layer layer-after" id="afterLayer">
-            <span style="background: var(--brand-burgundy); color: #FFFFFF; padding: 5px 14px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; width: max-content;">
-              Aurelia Bridal HD Glam
-            </span>
-          </div>
-
-          <!-- Slider Range Input Control -->
-          <input type="range" min="0" max="100" value="50" class="split-slider" id="imageSlider" aria-label="Slide to compare before and after looks" oninput="handleSlider(this.value)">
-
-          <div class="slider-handle-visual" id="sliderHandle" aria-hidden="true">
-            <i data-lucide="move-horizontal" size="18"></i>
-          </div>
+        <!-- Image Display for Transformation Showcase -->
+        <div class="transformation-image-wrapper" style="display: flex; justify-content: center; align-items: center; overflow: hidden;">
+          <img src="Parlour_Image.webp" alt="Transformation Showcase" style="max-width: 100%; height: auto; border-radius: 12px;">
         </div>
 
         <!-- Transformation Breakdown -->
